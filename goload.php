@@ -38,8 +38,11 @@
                 $trangthai = (new TaiKhoanController())->FLogin($_POST['taikhoan'], $md5pass);
                 echo json_encode($trangthai);
             break;
-            case "get_thongtin_vungtrong_ct":
+            case "get_thongtin_nhanvien":
                 if(isset($_SESSION["madv"])){
+                    $madonvi = $_POST['madonvi'];
+                    $manhanvien = $_POST['manhanvien'];
+                    $res = (new AppController())->FGetThongTinNhanVien($madonvi, $manhanvien);
                     echo json_encode($res);
                 }
             break;

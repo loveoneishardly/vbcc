@@ -23,40 +23,40 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="control-label">Tên nhân viên</label>
-                            <input id="vungtrong_hoten" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_hoten" name="thongtin_hoten" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Tuổi</label>
-                            <input id="vungtrong_tuoi" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_tuoi" name="thongtin_tuoi" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Địa chỉ</label>
-                            <input id="vungtrong_diachi" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_diachi" name="thongtin_diachi" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Số điện thoại</label>
-                            <input id="vungtrong_hocvan" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_sodienthoai" name="thongtin_sodienthoai" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Đơn vị</label>
-                            <input id="vungtrong_sodienthoai" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_donvi" name="thongtin_donvi" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                     </div>
                     <div class="col-lg-6 offset-lg-0">
                         <div class="form-group">
                             <label class="control-label">Giới tính</label>
-                            <select class="form-control" id="vungtrong_gioitinh" name="" disabled="true" readonly=true>
+                            <select class="form-control" id="thongtin_gioitinh" name="" disabled="true" readonly=true>
                                 <option value="0">Nữ</option>
                                 <option value="1">Nam</option>
                             </select >
                         </div>
                         <div class="form-group">
                             <label class="control-label">Ngày sinh</label>
-                            <input id="vungtrong_hoten" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_ngaysinh" name="" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Dân tộc</label>
-                            <select class="form-control" id="vungtrong_dantoc" name="" disabled="true" readonly=true>
+                            <select class="form-control" id="thongtin_dantoc" name="" disabled="true" readonly=true>
                                 <option value="1">Kinh</option>
                                 <option value="2">Hoa</option>
                                 <option value="3">Khơ-me</option>
@@ -65,11 +65,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Phòng ban</label>
-                            <input id="vungtrong_dientichdat" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_phongban" name="" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Ghi chú</label>
-                            <input id="vungtrong_dientichdat" name="" class="form-control" type="text" placeholder="" readonly=true>
+                            <input id="thongtin_ghichu" name="" class="form-control" type="text" placeholder="" readonly=true>
                         </div>
                     </div>
                 </div>
@@ -79,72 +79,70 @@
                     <div class="col-lg-12">
                         <div class="tile-title-w-btn">
                             <h3 class="title">Danh sách chứng chỉ, chứng nhận</h3>
-                            <input id="vungtrong_id" name="vungtrong_id" hidden="true" />
-                            <input id="vungtrong_manongho" name="vungtrong_manongho" hidden="true"  />
                             <p>
-                                <button id="vungtrong_xemdanhsach" name="vungtrong_xemdanhsach" class="btn btn-primary icon-btn" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-play"></i>XEM DANH SÁCH</button>
-                                <button id="vungtrong_them" name="vungtrong_them" class="btn btn-primary icon-btn" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-plus-circle"></i>THÊM MỚI</button>
+                                <button id="vbcc_xemdanhsach" name="vbcc_xemdanhsach" class="btn btn-primary icon-btn" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-play"></i>XEM DANH SÁCH</button>
+                                <button id="vbcc_themmoi" name="vbcc_themmoi" class="btn btn-primary icon-btn" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-plus-circle"></i>THÊM MỚI</button>
                             </p>
                         </div>
-                        <div id="list_vungtrong"></div>
+                        <div id="list_vanbang_chungchi"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="thongtinvungtrong" style="display:none;">
+<div id="chitiet_vanbang_chungchi" style="display:none;">
     <div class="tile mb-4">
         <div class="row" style="margin-bottom: 2rem;">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label class="control-label">Tên nhân viên</label>
-                    <input id="vungtrong_hoten" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_hoten" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Văn bằng chứng chỉ</label>
-                    <input id="vungtrong_tuoi" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_vbcc" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Loại chứng chỉ</label>
-                    <input id="vungtrong_diachi" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_loaicc" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Mức chứng chỉ</label>
-                    <input id="vungtrong_hocvan" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_muccc" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">File đính kèm</label>
-                    <input id="vungtrong_dientichdat" name="" class="form-control" type="text" placeholder="">
+                    <input id="chitiet_filekem" name="" class="form-control" type="text" placeholder="">
                 </div>
             </div>
             <div class="col-lg-6 offset-lg-0">
                 <div class="form-group">
                     <label class="control-label">Cơ sở đào tạo</label>
-                    <input id="vungtrong_thanhvien" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_coso" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Địa điểm đào tạo</label>
-                    <input id="vungtrong_thanhvien_laodong" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_diadiem" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Điểm</label>
-                    <input id="vungtrong_thanhvien_laodong" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_diemthi" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ngày cấp chứng chỉ</label>
-                    <input id="vungtrong_thanhvien_laodong" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_ngaycap" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Thời hạn áp dụng</label>
-                    <input id="vungtrong_thanhvien_laodong" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_thoihan" name="" class="form-control" type="text" placeholder="" readonly=true>
                 </div>
             </div>
         </div>
         <div class="tile-footer">
             <div class="bs-component" style="margin-left:20px !important">
-                <button id="vungtrong_luuthongtin" name="vungtrong_luuthongtin" class="btn btn-primary" type="button" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-check-circle"></i>LƯU THÔNG TIN</button>
-                <button id="vungtrong_close" name="vungtrong_close" class="btn btn-secondary" type="button" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-times"></i>ĐÓNG</button>
+                <button id="chitiet_vbcc_luu" name="chitiet_vbcc_luu" class="btn btn-primary" type="button" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-check-circle"></i>LƯU THÔNG TIN</button>
+                <button id="chitiet_vbcc_dong" name="chitiet_vbcc_dong" class="btn btn-secondary" type="button" style="margin-bottom:2px !important"><i class="fa fa-fw fa-lg fa-times"></i>ĐÓNG</button>
             </div>
         </div>
     </div>
@@ -156,13 +154,14 @@
     var wHeight = $(window).height();
     var wWidht = $(window).width();
     var w_gird = (wWidht/1.29)/5;
-    var source_listvungtrong;
+    var source_listvbcc;
     var admin = <?php echo $_SESSION["admin"]; ?>;
     var madonvi = <?php echo $_SESSION["madv"]; ?>;
     var manhanvien = <?php echo $_SESSION["manv"]; ?>;
     var tennhanvien = <?php echo "'".$_SESSION["tennv"]."'"; ?>;
     $(document).ready(function () {
-        $('#vungtrong_thoigian_batdautrong').datepicker({
+        get_thongtin_chung(madonvi, manhanvien);
+        $('#thongtin_ngaysinh').datepicker({
             format: "dd/mm/yyyy",
             // autoclose: true,
             todayHighlight: true,
@@ -170,7 +169,7 @@
             todayBtn: 'linked',
             clearBtn: true
         });
-        $('#vungtrong_thoigianbatdau').datepicker({
+        $('#chitiet_ngaycap').datepicker({
             format: "dd/mm/yyyy",
             // autoclose: true,
             todayHighlight: true,
@@ -178,31 +177,7 @@
             todayBtn: 'linked',
             clearBtn: true
         });
-        $('#vungtrong_thoigianketthuc').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
-        $('#vungtrong_ngaysanxuat').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
-        $('#vungtrong_ngaythuhoach').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
-        source_listvungtrong = {
+        source_listvbcc = {
             datatype: "json",
             datafields: [
                 { name: 'ID_LIST'},
@@ -214,14 +189,14 @@
                 { name: 'TEN_CHUNGCHI_CHUNGNHAN'},
                 { name: 'NGAY_HET_HAN'}
             ],
-            url: 'go?for=load_list_vungtrong&madonvi=' + madonvi + '&manhanvien=' + manhanvien,
+            url: 'go?for=load_list_vbcc&madonvi=' + madonvi + '&manhanvien=' + manhanvien,
             cache: false,
             pagesize: 50,
             pager: function (pagenum, pagesize, oldpagenum) {
             }
         };
-        var dataAdapter = new $.jqx.dataAdapter(source_listvungtrong);
-        $("#list_vungtrong").jqxGrid({
+        var dataAdapter = new $.jqx.dataAdapter(source_listvbcc);
+        $("#list_vanbang_chungchi").jqxGrid({
             source: dataAdapter,
             width: '100%',
             height: '450',
@@ -254,23 +229,23 @@
                 { text: 'Ngày hết hạn', datafield: 'NGAY_HET_HAN', width: w_gird, align: 'center', cellsalign: 'center'}
             ]
         });
-        $('#list_vungtrong').on('rowclick', function (event) {
+        $('#list_vanbang_chungchi').on('rowclick', function (event) {
             var args = event.args;
             var rowBoundIndex = args.rowindex;
-            var selectedRowData_dsvungtrong = $('#list_vungtrong').jqxGrid('getrowdata', rowBoundIndex);
+            var selectedRowData_dsvungtrong = $('#list_vanbang_chungchi').jqxGrid('getrowdata', rowBoundIndex);
             $("#vungtrong_id").val(selectedRowData_dsvungtrong.ID_VUNG_TRONG);
             $("#vungtrong_manongho").val(selectedRowData_dsvungtrong.MA_NONG_HO);
         });
-        $("#vungtrong_xemdanhsach").click(function(){
-            load_ds_vungtrong();
+        $("#vbcc_xemdanhsach").click(function(){
+            load_ds_vbcc();
         });
-        var modal_thongtinvungtrong = new jBox('Modal', {
+        var modal_themvbcc = new jBox('Modal', {
             title: "VĂN BẰNG CHỨNG CHỈ",
             overlay: true,
             width: window.innerWidth/1.05,
             height: window.innerHeight/1.5,
             responsiveWidth: true,
-            content: $('#thongtinvungtrong'),
+            content: $('#chitiet_vanbang_chungchi'),
             animation: {
                 open: 'move:right',
                 close: 'slide:top'
@@ -284,10 +259,10 @@
             closeOnClick: false,
             zIndex: 999999
         });
-        $("#vungtrong_them").click(function(){
+        $("#vbcc_themmoi").click(function(){
             var status = action_input(false);
             if (status) {
-                modal_thongtinvungtrong.open();
+                modal_themvbcc.open();
                 action_reset();
             }
         });
@@ -297,7 +272,7 @@
             if (idvungtrong){
                 var status = action_input(false);
                 if (status) {
-                    modal_thongtinvungtrong.open();
+                    modal_themvbcc.open();
                     get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
                 }
             } else {
@@ -310,52 +285,14 @@
             if (idvungtrong){
                 var status = action_input(true);
                 if (status) {
-                    modal_thongtinvungtrong.open();
+                    modal_themvbcc.open();
                     get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
                 }
             } else {
                 cute_alert_warning("Chưa chọn vùng trồng nào!");
             }
         });
-        $("#vungtrong_nongho").change(function (evt) {
-            manongho = $("#vungtrong_nongho").val();
-            $.ajax({
-                type: 'POST',
-                url: 'go',
-                data: {
-                    for: "get_thongtin_nongho",
-                    madonvi: madonvi,
-                    manongho: manongho
-                }
-            }).done(function(data){
-                var value = JSON.parse(data);
-                if (value.length === 0) {
-                    $("#vungtrong_hoten").val("");
-                    $("#vungtrong_tuoi").val("");
-                    $("#vungtrong_diachi").val("");
-                    $("#vungtrong_hocvan").val("");
-                    $("#vungtrong_thanhvien").val("");
-                    $("#vungtrong_thanhvien_laodong").val("");
-                    $("#vungtrong_gioitinh").val("");
-                    $("#vungtrong_dantoc").val("");
-                    $("#vungtrong_sudung_dienthoai").val("");
-                    $("#vungtrong_sodienthoai").val("");
-                    $("#vungtrong_zalo").val("");
-                } else {
-                    $("#vungtrong_hoten").val(value[0].TEN_NONG_HO);
-                    $("#vungtrong_tuoi").val(value[0].TUOI);
-                    $("#vungtrong_diachi").val(value[0].DIA_CHI);
-                    $("#vungtrong_hocvan").val(value[0].TRINH_DO);
-                    $("#vungtrong_thanhvien").val(value[0].THANH_VIEN_GIA_DINH);
-                    $("#vungtrong_thanhvien_laodong").val(value[0].TRONG_TUOI_LAO_DONG);
-                    $("#vungtrong_gioitinh").val(value[0].GIOI_TINH);
-                    $("#vungtrong_dantoc").val(value[0].DAN_TOC);
-                    $("#vungtrong_sudung_dienthoai").val(value[0].SU_DUNG_DT);
-                    $("#vungtrong_sodienthoai").val(value[0].SO_DIEN_THOAI);
-                    $("#vungtrong_zalo").val(value[0].USE_ZALO);
-                }
-            });
-        });
+        
         $("#vungtrong_luuthongtin").click(function(){
             var mavungtrong_id = $("#vungtrong_id").val();
             var manongho = $("#vungtrong_nongho").val();
@@ -594,21 +531,21 @@
                     var value = JSON.parse(data);
                     if(value[0].ketqua > 0) {
                         cute_alert_success("Lưu thông tin thành công!");
-                        load_ds_vungtrong();
+                        load_ds_vbcc();
                     } else {
                         cute_alert_error('Lưu thông tin thất bại!');
                     }
                 });   
             }
         });
-        $("#vungtrong_close").click(function(){
-            modal_thongtinvungtrong.close();
+        $("#chitiet_vbcc_dong").click(function(){
+            modal_themvbcc.close();
         });
     });
-    function load_ds_vungtrong(){
-        var url_dsnongho = "go?for=load_list_vungtrong&madonvi=" + madonvi + "&manhanvien=" + manhanvien;
-        source_listvungtrong.url = url_dsnongho;
-        $("#list_vungtrong").jqxGrid('updatebounddata');
+    function load_ds_vbcc(){
+        var url_dsvbcc = "go?for=load_list_vbcc&madonvi=" + madonvi + "&manhanvien=" + manhanvien;
+        source_listvbcc.url = url_dsvbcc;
+        $("#list_vanbang_chungchi").jqxGrid('updatebounddata');
     }
     function action_input(status){
         $(".form-group input").prop("disabled", status);
@@ -737,6 +674,42 @@
                 $("#vungtrong_ghichu").val(value[0].GHICHU);
                 $("#vungtrong_ngaythuhoach").val(value[0].NGAY_THU_HOACH);
                 $("#vungtrong_sanluong_dukien").val(value[0].SAN_LUONG);
+            }
+        });
+    }
+    function get_thongtin_chung(madonvi, manhanvien){
+        $.ajax({
+            type: 'POST',
+            url: 'go',
+            data: {
+                for: "get_thongtin_nhanvien",
+                madonvi: madonvi,
+                manhanvien: manhanvien
+            }
+        }).done(function(data){
+            var value = JSON.parse(data);
+            if (value.length === 0) {
+                $("#thongtin_hoten").val("");
+                $("#thongtin_tuoi").val("");
+                $("#thongtin_diachi").val("");
+                $("#thongtin_sodienthoai").val("");
+                $("#thongtin_donvi").val("");
+                $("#thongtin_gioitinh").val("");
+                $("#thongtin_ngaysinh").val("");
+                $("#thongtin_dantoc").val("");
+                $("#thongtin_phongban").val("");
+                $("#thongtin_ghichu").val("");
+            } else {
+                $("#thongtin_hoten").val(value[0].TEN_NHAN_VIEN);
+                $("#thongtin_tuoi").val(value[0].TUOI);
+                $("#thongtin_diachi").val(value[0].DIA_CHI);
+                $("#thongtin_sodienthoai").val(value[0].SO_DIEN_THOAI);
+                $("#thongtin_donvi").val(value[0].TEN_DON_VI);
+                $("#thongtin_gioitinh").val(value[0].GIOI_TINH);
+                $("#thongtin_ngaysinh").val(value[0].NGAY_SINH);
+                $("#thongtin_dantoc").val(value[0].DAN_TOC);
+                $("#thongtin_phongban").val(value[0].TEN_PHONG_BAN);
+                $("#thongtin_ghichu").val(value[0].GHI_CHU);
             }
         });
     }
