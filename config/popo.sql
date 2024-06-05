@@ -146,9 +146,29 @@ CREATE TABLE `vbcc_thongtin_chitiet` (
   KEY `MA_NHAN_VIEN` (`MA_NHAN_VIEN`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_1` FOREIGN KEY (`MA_DON_VI`) REFERENCES `dm_donvi` (`ID`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_2` FOREIGN KEY (`MA_NHAN_VIEN`) REFERENCES `dm_nhanvien` (`MA_NHAN_VIEN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 /*Data for the table `vbcc_thongtin_chitiet` */
+
+insert  into `vbcc_thongtin_chitiet`(`ID_CC`,`MA_DON_VI`,`MA_NHAN_VIEN`,`TU_NGAY`,`DEN_NGAY`,`NGAY_CAP`,`CHUNG_CHI_CHUNG_NHAN`,`NGAY_HET_HAN`,`LOAI_VBCC`,`MUC_VBCC`,`CO_SO_DAO_TAO`,`DIA_DIEM_DAO_TAO`,`DIEM`,`CREATE`,`GHI_CHU`,`TRANG_THAI`) values 
+(1,1,1,'2024-06-04','2024-06-04','2024-06-04','VĂN BẰNG 1','2024-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+
+/* Procedure structure for procedure `p_get_list_vbcc` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `p_get_list_vbcc` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_get_list_vbcc`(
+	p_madonvi VARCHAR(250),
+	p_manhanvien VARCHAR(250)
+)
+BEGIN
+	select ID_CC, MA_DON_VI, MA_NHAN_VIEN, DATE_FORMAT(TU_NGAY,'%d/%m/%Y') as TU_NGAY, DATE_FORMAT(DEN_NGAY,'%d/%m/%Y') as DEN_NGAY, DATE_FORMAT(NGAY_CAP,'%d/%m/%Y') as NGAY_CAP, CHUNG_CHI_CHUNG_NHAN as TEN_CHUNGCHI_CHUNGNHAN, DATE_FORMAT(NGAY_HET_HAN,'%d/%m/%Y') AS NGAY_HET_HAN
+	from vbcc_thongtin_chitiet ct
+	where MA_DON_VI  = p_madonvi and MA_NHAN_VIEN = p_manhanvien;
+    END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `p_load_thongtin_nhanvien` */
 
@@ -161,7 +181,7 @@ DELIMITER $$
 	p_manhanvien VARCHAR(250)
 )
 BEGIN
-	select nv.ADMIN, nv.AVATAR, nv.DAN_TOC, nv.DIA_CHI, nv.GHI_CHU, nv.GIOI_TINH, nv.MA_DON_VI, nv.MA_NHAN_VIEN, nv.MA_PHONG_BAN, nv.NGAY_SINH, nv.SO_CCCD, nv.SO_DIEN_THOAI, nv.TEN_NHAN_VIEN, 
+	select nv.ADMIN, nv.AVATAR, nv.DAN_TOC, nv.DIA_CHI, nv.GHI_CHU, nv.GIOI_TINH, nv.MA_DON_VI, nv.MA_NHAN_VIEN, nv.MA_PHONG_BAN, date_format(nv.NGAY_SINH,'%d/%m/%Y') as NGAY_SINH, nv.SO_CCCD, nv.SO_DIEN_THOAI, nv.TEN_NHAN_VIEN, 
 		nv.TRANGTHAI, nv.TUOI, pb.TEN_PHONG_BAN, dv.TENDONVI as TEN_DON_VI
 	from dm_nhanvien nv left join dm_phongban pb on nv.ma_phong_ban = pb.ma_phong_ban AND pb.ma_don_vi = nv.ma_don_vi, 
 		dm_donvi dv

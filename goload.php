@@ -46,11 +46,6 @@
                     echo json_encode($res);
                 }
             break;
-            case "get_thongtin_nongho":
-                if(isset($_SESSION["madv"])){
-                    echo json_encode($res);
-                }
-            break;
             case "luu_thongtin_vungtrong":
                 if(isset($_SESSION["madv"])){
                     echo json_encode($res);
@@ -99,10 +94,13 @@
 
     if(isset($_GET['for'])) {
         switch ($_GET['for']) {
-            case "load_list_nongho":
-                $madonvi = $_GET['madonvi'];
-                $res = (new DanhMucController())->FDanhSachNongHo($madonvi);
-                echo json_encode($res);
+            case "load_list_vbcc":
+                if(isset($_SESSION["madv"])){
+                    $madonvi = $_GET['madonvi'];
+                    $manhanvien = $_GET['manhanvien'];
+                    $res = (new AppController())->FGetListVBCC($madonvi, $manhanvien);
+                    echo json_encode($res);
+                }
             break;
             case "load_list_loaisp":
                 $madonvi = $_GET['madonvi'];

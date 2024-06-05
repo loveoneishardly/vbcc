@@ -11,5 +11,14 @@
             $stmt -> execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function FGetListVBCC($madonvi, $manhanvien){
+            $pdo = ConnectDb::getInstance()->getConnection();
+            $stmt = $pdo->prepare("call p_get_list_vbcc(:madonvi,:manhanvien);");
+            $stmt -> bindParam(':madonvi', $madonvi, PDO::PARAM_STR);
+            $stmt -> bindParam(':manhanvien', $manhanvien, PDO::PARAM_STR);
+            $stmt -> execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>
