@@ -46,8 +46,24 @@
                     echo json_encode($res);
                 }
             break;
-            case "luu_thongtin_vungtrong":
+            case "luu_thongtin_vanbang_chungchi":
                 if(isset($_SESSION["madv"])){
+                    $idct = $_POST['idct'];
+                    $madonvi = $_POST['madonvi'];
+                    $tungay = $_POST['tungay'];
+                    $denngay = $_POST['denngay'];
+                    $cosodaotao = $_POST['cosodaotao'];
+                    $vanbangcc = $_POST['vanbangcc'];
+                    $diadiem = $_POST['diadiem'];
+                    $loaichungchi = $_POST['loaichungchi'];
+                    $diem = $_POST['diem'];
+                    $ngaycapchungchi = $_POST['ngaycapchungchi'];
+                    $mucchungchi = $_POST['mucchungchi'];
+                    $ngayhethan = $_POST['ngayhethan'];
+                    $ghichu = $_POST['ghichu'];
+                    $filedinhkem = $_POST['filedinhkem'];
+                    $manhanvien = $_POST['manhanvien'];
+                    $res = (new AppController())->FLuuThongTinVanBangChungChi($idct, $madonvi, $tungay, $denngay, $cosodaotao, $vanbangcc, $diadiem, $loaichungchi, $diem, $ngaycapchungchi, $mucchungchi, $ngayhethan, $ghichu, $filedinhkem, $manhanvien);
                     echo json_encode($res);
                 }
             break;

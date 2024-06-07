@@ -16,6 +16,7 @@
                     <div class="col-lg-12">
                         <div class="page-header">
                             <h3 class="mb-3" id="navs">Thông tin chung</h3>
+                            <input id="thongtin_idct_vbcc" hidden=true readonly=true>
                         </div>
                     </div>
                 </div>
@@ -101,49 +102,49 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Từ ngày</label>
-                    <input id="chitiet_tungay" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_tungay" name="" class="form-control-new" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Văn bằng chứng chỉ</label>
-                    <input id="chitiet_vbcc" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_vbcc" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Loại chứng chỉ</label>
-                    <input id="chitiet_loaicc" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_loaicc" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ngày cấp chứng chỉ</label>
-                    <input id="chitiet_ngaycap" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_ngaycap" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ngày hết hạn</label>
-                    <input id="chitiet_ngayhethan" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_ngayhethan" name="" class="form-control" type="text" placeholder="">
                 </div>
             </div>
             <div class="col-lg-6 offset-lg-0">
                 <div class="form-group">
                     <label class="control-label">Cơ sở đào tạo</label>
-                    <input id="chitiet_coso" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_coso" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Đến ngày</label>
-                    <input id="chitiet_denngay" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_denngay" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Địa điểm đào tạo</label>
-                    <input id="chitiet_diadiem" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_diadiem" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Điểm</label>
-                    <input id="chitiet_diemthi" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_diemthi" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Mức chứng chỉ</label>
-                    <input id="chitiet_muccc" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_muccc" name="" class="form-control" type="text" placeholder="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ghi chú</label>
-                    <input id="chitiet_ghichu" name="" class="form-control" type="text" placeholder="" readonly=true>
+                    <input id="chitiet_ghichu" name="" class="form-control" type="text" placeholder="">
                 </div>
             </div>
             <div class="col-lg-12">
@@ -175,15 +176,32 @@
     var tennhanvien = <?php echo "'".$_SESSION["tennv"]."'"; ?>;
     $(document).ready(function () {
         get_thongtin_chung(madonvi, manhanvien);
-        /*$('#thongtin_ngaysinh').datepicker({
+        $("#chitiet_tungay").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN' });
+        // $('#chitiet_tungay').datepicker({
+        //     format: "dd/mm/yyyy",
+        //     // autoclose: true,
+        //     todayHighlight: true,
+        //     language: 'vi',
+        //     todayBtn: 'linked',
+        //     clearBtn: true
+        // });
+        $('#chitiet_denngay').datepicker({
             format: "dd/mm/yyyy",
             // autoclose: true,
             todayHighlight: true,
             language: 'vi',
             todayBtn: 'linked',
             clearBtn: true
-        });*/
+        });
         $('#chitiet_ngaycap').datepicker({
+            format: "dd/mm/yyyy",
+            // autoclose: true,
+            todayHighlight: true,
+            language: 'vi',
+            todayBtn: 'linked',
+            clearBtn: true
+        });
+        $('#chitiet_ngayhethan').datepicker({
             format: "dd/mm/yyyy",
             // autoclose: true,
             todayHighlight: true,
@@ -246,9 +264,8 @@
         $('#list_vanbang_chungchi').on('rowclick', function (event) {
             var args = event.args;
             var rowBoundIndex = args.rowindex;
-            var selectedRowData_dsvungtrong = $('#list_vanbang_chungchi').jqxGrid('getrowdata', rowBoundIndex);
-            $("#vungtrong_id").val(selectedRowData_dsvungtrong.ID_VUNG_TRONG);
-            $("#vungtrong_manongho").val(selectedRowData_dsvungtrong.MA_NONG_HO);
+            var selectedRowData_dsvbcc = $('#list_vanbang_chungchi').jqxGrid('getrowdata', rowBoundIndex);
+            $("#thongtin_idct_vbcc").val(selectedRowData_dsvbcc.ID_CC);
         });
         $("#vbcc_xemdanhsach").click(function(){
             load_ds_vbcc();
@@ -271,7 +288,7 @@
             closeButton: 'title',
             fixed: true,
             closeOnClick: false,
-            zIndex: 999999
+            zIndex: 2222
         });
         $("#vbcc_themmoi").click(function(){
             var status = action_input(false);
@@ -280,82 +297,85 @@
                 action_reset();
             }
         });
-        $("#vungtrong_sua").click(function(){
-            var idvungtrong = $("#vungtrong_id").val();
-            var manongho = $("#vungtrong_manongho").val();
-            if (idvungtrong){
-                var status = action_input(false);
-                if (status) {
-                    modal_themvbcc.open();
-                    get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
+        $("#chitiet_vbcc_luu").click(function(){
+            var idct = $("#thongtin_idct_vbcc").val();
+            var tungay = $("#chitiet_tungay").val();
+            var denngay = $("#chitiet_denngay").val();
+            var cosodaotao = $("#chitiet_coso").val();
+            var vanbangcc = $("#chitiet_vbcc").val();
+            var diadiem = $("#chitiet_diadiem").val();
+            var loaichungchi = $("#chitiet_loaicc").val();
+            var diem = $("#chitiet_diemthi").val();
+            var ngaycapchungchi = $("#chitiet_ngaycap").val();
+            var mucchungchi = $("#chitiet_muccc").val();
+            var ngayhethan = $("#chitiet_ngayhethan").val();
+            var ghichu = $("#chitiet_ghichu").val();
+            var filedinhkem = $("#chitiet_filekem").val();
+            
+            $.ajax({
+                type: 'POST',
+                url: 'go',
+                data: {
+                    for: "luu_thongtin_vanbang_chungchi",
+                    idct: idct,
+                    madonvi: madonvi,
+                    tungay: convertDate(tungay),
+                    denngay: convertDate(denngay),
+                    cosodaotao: cosodaotao,
+                    vanbangcc: vanbangcc,
+                    diadiem: diadiem,
+                    loaichungchi: loaichungchi,
+                    diem: diem,
+                    ngaycapchungchi: convertDate(ngaycapchungchi),
+                    mucchungchi: mucchungchi,
+                    ngayhethan: convertDate(ngayhethan),
+                    ghichu: ghichu,
+                    filedinhkem: filedinhkem,
+                    manhanvien: manhanvien
                 }
-            } else {
-                cute_alert_warning("Chưa chọn vùng trồng nào!");
-            }
-        });
-        $("#vungtrong_chitiet").click(function(){
-            var idvungtrong = $("#vungtrong_id").val();
-            var manongho = $("#vungtrong_manongho").val();
-            if (idvungtrong){
-                var status = action_input(true);
-                if (status) {
-                    modal_themvbcc.open();
-                    get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
+            }).done(function(data){
+                var value = JSON.parse(data);
+                if(value[0].ketqua > 0) {
+                    cute_alert_success("Lưu thông tin thành công!");
+                    load_ds_vbcc();
+                } else {
+                    cute_alert_error('Lưu thông tin thất bại!');
                 }
-            } else {
-                cute_alert_warning("Chưa chọn vùng trồng nào!");
-            }
-        });
-        
-        $("#vungtrong_luuthongtin").click(function(){
-            var mavungtrong_id = $("#vungtrong_id").val();
-            var manongho = $("#vungtrong_nongho").val();
-            var tennongho = $("#vungtrong_hoten").val();
-            var tuoi = $("#vungtrong_tuoi").val();
-            var diachi = $("#vungtrong_diachi").val();
-            var hocvan = $("#vungtrong_hocvan").val();
-            var dientichdat = $("#vungtrong_dientichdat").val();
-            var thannvien = $("#vungtrong_thanhvien").val();
-            var thannvienlaodong = $("#vungtrong_thanhvien_laodong").val();
-            var gioitinh = $("#vungtrong_gioitinh").val();
-            var dantoc = $("#vungtrong_dantoc").val();
-            var sudungdt = $("#vungtrong_sudung_dienthoai").val();
-            var sodienthoai = $("#vungtrong_sodienthoai").val();
-            var usezalo = $("#vungtrong_zalo").val();
-            var kinhnghiem = $("#vungtrong_kinhnghiem").val();
-            var tuoicaytrong = $("#vungtrong_tuoicaytrong").val();
-            var doituongtrong = $("#vungtrong_doituong").val();
-            if (manongho == null || manongho == "---") {
-                cute_alert_error("Chưa chọn nông hộ!");
-            } else if (doituongtrong == null || doituongtrong == " ") {
-                cute_alert_error("Chưa chọn loại cây trồng!");
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'go',
-                    data: {
-                        for: "luu_thongtin_vungtrong",
-                        mavungtrong_id: mavungtrong_id,
-                        madonvi: madonvi,
-                        manongho: manongho,
-                        tennongho: tennongho,
-                        thoigianbatdautrong: convertDate(thoigianbatdautrong),
-                        manhanvien: manhanvien
-                    }
-                }).done(function(data){
-                    var value = JSON.parse(data);
-                    if(value[0].ketqua > 0) {
-                        cute_alert_success("Lưu thông tin thành công!");
-                        load_ds_vbcc();
-                    } else {
-                        cute_alert_error('Lưu thông tin thất bại!');
-                    }
-                });   
-            }
+            });   
         });
         $("#chitiet_vbcc_dong").click(function(){
             modal_themvbcc.close();
         });
+
+
+        // $("#vungtrong_sua").click(function(){
+        //     var idvungtrong = $("#vungtrong_id").val();
+        //     var manongho = $("#vungtrong_manongho").val();
+        //     if (idvungtrong) {
+        //         var status = action_input(false);
+        //         if (status) {
+        //             modal_themvbcc.open();
+        //             get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
+        //         }
+        //     } else {
+        //         cute_alert_warning("Chưa chọn vùng trồng nào!");
+        //     }
+        // });
+        // $("#vungtrong_chitiet").click(function(){
+        //     var idvungtrong = $("#vungtrong_id").val();
+        //     var manongho = $("#vungtrong_manongho").val();
+        //     if (idvungtrong){
+        //         var status = action_input(true);
+        //         if (status) {
+        //             modal_themvbcc.open();
+        //             get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
+        //         }
+        //     } else {
+        //         cute_alert_warning("Chưa chọn vùng trồng nào!");
+        //     }
+        // });
+        
+        
     });
     function load_ds_vbcc(){
         var url_dsvbcc = "go?for=load_list_vbcc&madonvi=" + madonvi + "&manhanvien=" + manhanvien;
@@ -369,10 +389,19 @@
         return true;
     }
     function action_reset(){
-        $(".form-group input").val("");
-        $(".form-group input").prop("checked", false);
-        $(".form-group select").val("");
-        $("table input").val("");
+        $("#chitiet_hoten").val(tennhanvien);
+        $("#chitiet_tungay").val("");
+        $("#chitiet_denngay").val("");
+        $("#chitiet_coso").val("");
+        $("#chitiet_vbcc").val("");
+        $("#chitiet_diadiem").val("");
+        $("#chitiet_loaicc").val("");
+        $("#chitiet_diemthi").val("");
+        $("#chitiet_ngaycap").val("");
+        $("#chitiet_muccc").val("");
+        $("#chitiet_ngayhethan").val("");
+        $("#chitiet_ghichu").val("");
+        $("#chitiet_filekem").val("");
     }
     function get_info_farm(madonvi, id, manongho, manhanvien){
         $("#vungtrong_nongho").val(manongho);

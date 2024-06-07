@@ -9,7 +9,8 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="./lib/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <script type="text/javascript" src="./lib/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="./lib/js/scripts/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="./lib/js/scripts/demos.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxcore.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxdata.js"></script> 
     <script type="text/javascript" src="./lib/jqwidgets/jqxbuttons.js"></script>
@@ -30,6 +31,8 @@
     <script type="text/javascript" src="./lib/jqwidgets/jqxcombobox.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="./lib/jqwidgets/globalization/globalize.culture.vi-VN.js"></script>
+    <script type="text/javascript" src="./lib/jqwidgets/globalization/globalize.culture.fr-FR.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxgrid.sort.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxgrid.aggregates.js"></script>
     <script type="text/javascript" src="./lib/jqwidgets/jqxwindow.js"></script>
