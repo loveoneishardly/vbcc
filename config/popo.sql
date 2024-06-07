@@ -138,7 +138,8 @@ CREATE TABLE `vbcc_thongtin_chitiet` (
   `CO_SO_DAO_TAO` varchar(250) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `DIA_DIEM_DAO_TAO` varchar(250) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `DIEM` varbinary(250) DEFAULT NULL,
-  `CREATE` datetime DEFAULT NULL,
+  `TIME_CREATE` datetime DEFAULT NULL,
+  `TIME_UPDATE` datetime DEFAULT NULL,
   `GHI_CHU` varchar(250) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `TRANG_THAI` int(2) DEFAULT '1',
   PRIMARY KEY (`ID_CC`),
@@ -146,12 +147,13 @@ CREATE TABLE `vbcc_thongtin_chitiet` (
   KEY `MA_NHAN_VIEN` (`MA_NHAN_VIEN`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_1` FOREIGN KEY (`MA_DON_VI`) REFERENCES `dm_donvi` (`ID`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_2` FOREIGN KEY (`MA_NHAN_VIEN`) REFERENCES `dm_nhanvien` (`MA_NHAN_VIEN`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 /*Data for the table `vbcc_thongtin_chitiet` */
 
-insert  into `vbcc_thongtin_chitiet`(`ID_CC`,`MA_DON_VI`,`MA_NHAN_VIEN`,`TU_NGAY`,`DEN_NGAY`,`NGAY_CAP`,`CHUNG_CHI_CHUNG_NHAN`,`NGAY_HET_HAN`,`LOAI_VBCC`,`MUC_VBCC`,`CO_SO_DAO_TAO`,`DIA_DIEM_DAO_TAO`,`DIEM`,`CREATE`,`GHI_CHU`,`TRANG_THAI`) values 
-(1,1,1,'2024-06-04','2024-06-04','2024-06-04','VĂN BẰNG 1','2024-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+insert  into `vbcc_thongtin_chitiet`(`ID_CC`,`MA_DON_VI`,`MA_NHAN_VIEN`,`TU_NGAY`,`DEN_NGAY`,`NGAY_CAP`,`CHUNG_CHI_CHUNG_NHAN`,`NGAY_HET_HAN`,`LOAI_VBCC`,`MUC_VBCC`,`CO_SO_DAO_TAO`,`DIA_DIEM_DAO_TAO`,`DIEM`,`TIME_CREATE`,`TIME_UPDATE`,`GHI_CHU`,`TRANG_THAI`) values 
+(1,1,1,'2024-06-04','2024-06-04','2024-06-04','VĂN BẰNG 1','2024-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
+(2,1,1,'2024-06-07','2024-06-07','2024-06-07','','2024-06-07','','','','','','2024-06-07 17:59:58',NULL,'',1);
 
 /* Procedure structure for procedure `p_get_list_vbcc` */
 
@@ -210,6 +212,62 @@ BEGIN
 		WHERE p_taikhoan = t.TAI_KHOAN AND p_matkhau = t.PASSWORD AND t.MA_DON_VI = dv.ID and t.TRANGTHAI = 1;
 	END IF;
 END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `p_luu_thongtin_vbcc` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `p_luu_thongtin_vbcc` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_luu_thongtin_vbcc`(
+	p_idct varchar(100),
+	p_madonvi varchar(100),
+	p_tungay VARCHAR(250),
+	p_denngay varchar(250),
+	p_cosodaotao VARCHAR(250),
+	p_vanbangcc varchar(250),
+	p_diadiem VARCHAR(250),
+	p_loaichungchi varchar(250),
+	p_diem VARCHAR(250),
+	p_ngaycapchungchi varchar(250),
+	p_mucchungchi VARCHAR(250),
+	p_ngayhethan varchar(250),
+	p_ghichu VARCHAR(250),
+	p_filedinhkem varchar(250),
+	p_manhanvien VARCHAR(100)
+)
+BEGIN
+	declare v_check_id_ct varchar(50);
+	Declare v_result varchar(50);
+	
+	select count(*) into v_check_id_ct from vbcc_thongtin_chitiet where ID_CC = p_idct and MA_DON_VI = p_madonvi and MA_NHAN_VIEN = p_manhanvien;
+	
+	if v_check_id_ct > 0 then	
+		update vbcc_thongtin_chitiet
+		set  	TU_NGAY = p_tungay,
+			DEN_NGAY = p_denngay,
+			NGAY_CAP = p_ngaycapchungchi,
+			CHUNG_CHI_CHUNG_NHAN = p_vanbangcc,
+			NGAY_HET_HAN = p_ngayhethan,
+			LOAI_VBCC = p_loaichungchi,
+			MUC_VBCC = p_mucchungchi,
+			CO_SO_DAO_TAO = p_cosodaotao,
+			DIA_DIEM_DAO_TAO = p_diadiem,
+			DIEM = p_diem,
+			GHI_CHU = p_ghichu
+		WHERE ID_CC = p_idct AND MA_DON_VI = p_madonvi AND MA_NHAN_VIEN = p_manhanvien;
+		
+		SELECT ROW_COUNT() INTO v_result;
+	else
+		insert into vbcc_thongtin_chitiet(MA_DON_VI, MA_NHAN_VIEN, TU_NGAY, DEN_NGAY, NGAY_CAP, CHUNG_CHI_CHUNG_NHAN, NGAY_HET_HAN, LOAI_VBCC, MUC_VBCC, CO_SO_DAO_TAO, DIA_DIEM_DAO_TAO, DIEM, TIME_CREATE, GHI_CHU)
+		values(p_madonvi, p_manhanvien, p_tungay, p_denngay, p_ngaycapchungchi, p_vanbangcc, p_ngayhethan, p_loaichungchi, p_mucchungchi, p_cosodaotao, p_diadiem, p_diem, CURRENT_TIMESTAMP(), p_ghichu);
+		
+		SELECT ROW_COUNT() INTO v_result;
+	end if;
+	
+	SELECT v_result AS ketqua;
+    END */$$
 DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

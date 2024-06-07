@@ -176,39 +176,10 @@
     var tennhanvien = <?php echo "'".$_SESSION["tennv"]."'"; ?>;
     $(document).ready(function () {
         get_thongtin_chung(madonvi, manhanvien);
-        $("#chitiet_tungay").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN' });
-        // $('#chitiet_tungay').datepicker({
-        //     format: "dd/mm/yyyy",
-        //     // autoclose: true,
-        //     todayHighlight: true,
-        //     language: 'vi',
-        //     todayBtn: 'linked',
-        //     clearBtn: true
-        // });
-        $('#chitiet_denngay').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
-        $('#chitiet_ngaycap').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
-        $('#chitiet_ngayhethan').datepicker({
-            format: "dd/mm/yyyy",
-            // autoclose: true,
-            todayHighlight: true,
-            language: 'vi',
-            todayBtn: 'linked',
-            clearBtn: true
-        });
+        $("#chitiet_tungay").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN', template: "primary"});
+        $("#chitiet_denngay").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN', template: "primary"});
+        $("#chitiet_ngaycap").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN', template: "primary"});
+        $("#chitiet_ngayhethan").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN', template: "primary"});
         source_listvbcc = {
             datatype: "json",
             datafields: [
