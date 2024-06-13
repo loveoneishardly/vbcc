@@ -107,18 +107,24 @@ CREATE TABLE `vbcc_file` (
   `TEN_FILE_GOC` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `TEN_HIEN_THI` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `DUONG_DAN` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `CREATE` datetime DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
   `TRANG_THAI` int(2) DEFAULT '1',
   PRIMARY KEY (`ID_FILE`),
   KEY `ID_CC` (`ID_CC`),
   KEY `MA_DON_VI` (`MA_DON_VI`),
   KEY `MA_NHAN_VIEN` (`MA_NHAN_VIEN`),
-  CONSTRAINT `vbcc_file_ibfk_1` FOREIGN KEY (`ID_CC`) REFERENCES `vbcc_thongtin_chitiet` (`ID_CC`),
   CONSTRAINT `vbcc_file_ibfk_2` FOREIGN KEY (`MA_DON_VI`) REFERENCES `dm_donvi` (`ID`),
   CONSTRAINT `vbcc_file_ibfk_3` FOREIGN KEY (`MA_NHAN_VIEN`) REFERENCES `dm_nhanvien` (`MA_NHAN_VIEN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `vbcc_file` */
+
+insert  into `vbcc_file`(`ID_FILE`,`ID_CC`,`MA_DON_VI`,`MA_NHAN_VIEN`,`TEN_FILE_GOC`,`TEN_HIEN_THI`,`DUONG_DAN`,`CREATE_TIME`,`TRANG_THAI`) values 
+(1,NULL,1,1,'rp_phieuphauthuat_thuthuat_new_1718243493.rtf','','uploads/rp_phieuphauthuat_thuthuat_new_1718243493.rtf',NULL,1),
+(2,NULL,1,1,'xnt_cld_khochung_1718188384.pdf','','uploads/xnt_cld_khochung_1718188384.pdf','2024-06-13 17:45:32',1),
+(3,NULL,1,1,'rp_phieuphauthuat_thuthuat_94003_NEW_1718243598.rtf','','uploads/rp_phieuphauthuat_thuthuat_94003_NEW_1718243598.rtf','2024-06-13 17:55:40',1),
+(4,NULL,1,1,'TKDLXMLGUILOI_94002_133626628344767404.xlsx','','uploads/TKDLXMLGUILOI_94002_133626628344767404.xlsx','2024-06-13 17:56:01',1),
+(5,NULL,1,1,'File_1718270846024_khongmahoa.xml','','uploads/File_1718270846024_khongmahoa.xml','2024-06-13 17:56:33',1);
 
 /*Table structure for table `vbcc_thongtin_chitiet` */
 
@@ -147,13 +153,18 @@ CREATE TABLE `vbcc_thongtin_chitiet` (
   KEY `MA_NHAN_VIEN` (`MA_NHAN_VIEN`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_1` FOREIGN KEY (`MA_DON_VI`) REFERENCES `dm_donvi` (`ID`),
   CONSTRAINT `vbcc_thongtin_chitiet_ibfk_2` FOREIGN KEY (`MA_NHAN_VIEN`) REFERENCES `dm_nhanvien` (`MA_NHAN_VIEN`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 /*Data for the table `vbcc_thongtin_chitiet` */
 
 insert  into `vbcc_thongtin_chitiet`(`ID_CC`,`MA_DON_VI`,`MA_NHAN_VIEN`,`TU_NGAY`,`DEN_NGAY`,`NGAY_CAP`,`CHUNG_CHI_CHUNG_NHAN`,`NGAY_HET_HAN`,`LOAI_VBCC`,`MUC_VBCC`,`CO_SO_DAO_TAO`,`DIA_DIEM_DAO_TAO`,`DIEM`,`TIME_CREATE`,`TIME_UPDATE`,`GHI_CHU`,`TRANG_THAI`) values 
 (1,1,1,'2024-06-04','2024-06-04','2024-06-04','VĂN BẰNG 1','2024-06-04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-(2,1,1,'2024-06-07','2024-06-07','2024-06-07','','2024-06-07','','','','','','2024-06-07 17:59:58',NULL,'',1);
+(2,1,1,'2024-06-07','2024-06-07','2024-06-07','','2024-06-07','','','','','','2024-06-07 17:59:58',NULL,'',1),
+(3,1,1,'0000-00-00','0000-00-00','0000-00-00','','0000-00-00','','','','','','2024-06-13 17:06:21',NULL,'',1),
+(4,1,1,'0000-00-00','0000-00-00','0000-00-00','','0000-00-00','','','','','','2024-06-13 17:09:46',NULL,'',1),
+(5,1,1,'0000-00-00','0000-00-00','0000-00-00','','0000-00-00','','','','','','2024-06-13 17:17:49',NULL,'',1),
+(6,1,1,'0000-00-00','0000-00-00','0000-00-00','','0000-00-00','','','','','','2024-06-13 17:20:10',NULL,'',1),
+(7,1,1,'0000-00-00','0000-00-00','0000-00-00','','0000-00-00','','','','','','2024-06-13 17:20:56',NULL,'',1);
 
 /* Procedure structure for procedure `p_get_list_vbcc` */
 
@@ -169,6 +180,26 @@ BEGIN
 	select ID_CC, MA_DON_VI, MA_NHAN_VIEN, DATE_FORMAT(TU_NGAY,'%d/%m/%Y') as TU_NGAY, DATE_FORMAT(DEN_NGAY,'%d/%m/%Y') as DEN_NGAY, DATE_FORMAT(NGAY_CAP,'%d/%m/%Y') as NGAY_CAP, CHUNG_CHI_CHUNG_NHAN as TEN_CHUNGCHI_CHUNGNHAN, DATE_FORMAT(NGAY_HET_HAN,'%d/%m/%Y') AS NGAY_HET_HAN
 	from vbcc_thongtin_chitiet ct
 	where MA_DON_VI  = p_madonvi and MA_NHAN_VIEN = p_manhanvien;
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `p_load_file_uploaded` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `p_load_file_uploaded` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_load_file_uploaded`(
+	p_idvbc VARCHAR(250),
+	p_madonvi VARCHAR(100),
+	p_manhanvien VARCHAR(250)
+)
+BEGIN
+	if p_idvbc = '' then
+		select * from vbcc_file where MA_DON_VI = p_madonvi and MA_NHAN_VIEN = p_manhanvien and ifnull(ID_CC,'') = '';
+	else
+		SELECT * FROM vbcc_file WHERE MA_DON_VI = p_madonvi AND MA_NHAN_VIEN = p_manhanvien AND ID_CC = p_idvbc;
+	end if;
     END */$$
 DELIMITER ;
 
@@ -188,6 +219,30 @@ BEGIN
 	from dm_nhanvien nv left join dm_phongban pb on nv.ma_phong_ban = pb.ma_phong_ban AND pb.ma_don_vi = nv.ma_don_vi, 
 		dm_donvi dv
 	where nv.ma_don_vi = p_madonvi and nv.ma_nhan_vien = p_manhanvien and nv.ma_don_vi = dv.ID;
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `p_luu_thongtin_file_kemtheo` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `p_luu_thongtin_file_kemtheo` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `p_luu_thongtin_file_kemtheo`(
+	p_madonvi VARCHAR(100),
+	p_namefile VARCHAR(250),
+	p_manhanvien VARCHAR(250)
+)
+BEGIN
+	DECLARE v_result VARCHAR(50);
+	
+	insert into vbcc_file(MA_DON_VI, MA_NHAN_VIEN, TEN_FILE_GOC, TEN_HIEN_THI, DUONG_DAN, CREATE_TIME)
+	values(p_madonvi, p_manhanvien, p_namefile, '', concat('uploads/',p_namefile), CURRENT_TIMESTAMP());
+	
+	SELECT ROW_COUNT() INTO v_result;
+	
+	SELECT v_result AS ketqua;
+	
     END */$$
 DELIMITER ;
 
@@ -240,6 +295,7 @@ DELIMITER $$
 BEGIN
 	declare v_check_id_ct varchar(50);
 	Declare v_result varchar(50);
+	DECLARE v_id_max VARCHAR(50);
 	
 	select count(*) into v_check_id_ct from vbcc_thongtin_chitiet where ID_CC = p_idct and MA_DON_VI = p_madonvi and MA_NHAN_VIEN = p_manhanvien;
 	
@@ -266,7 +322,13 @@ BEGIN
 		SELECT ROW_COUNT() INTO v_result;
 	end if;
 	
-	SELECT v_result AS ketqua;
+	if v_result > 0 then
+		select max(ID_CC) into v_id_max from vbcc_thongtin_chitiet;
+	else
+		set v_id_max = 0;
+	end if;
+	
+	SELECT v_id_max AS ketqua;
     END */$$
 DELIMITER ;
 

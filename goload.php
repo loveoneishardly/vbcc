@@ -67,13 +67,21 @@
                     echo json_encode($res);
                 }
             break;
-            case "get_list_vungtrong_nongho":
+            case "_upload_file":
                 if(isset($_SESSION["madv"])){
+                    $madonvi = $_SESSION["madv"];
+                    $manhanvien = $_SESSION["manv"];
+                    $res = (new AppController())->FLuuFileUpload($madonvi,$manhanvien);
                     echo json_encode($res);
                 }
             break;
-            case "luu_thongtin_canhtac":
+            case "load_file_uploaded":
                 if(isset($_SESSION["madv"])){
+                    $id_vbcc = $_POST['idvbcc'];
+                    $madonvi = $_POST['madonvi'];
+                    $manhanvien = $_POST['manhanvien'];
+                    $res = (new AppController())->FLoadFileUploaded($id_vbcc, $madonvi, $manhanvien);
+                    echo json_encode($res);
                 }
             break;
             case "luu_thongtin_phanbon":
@@ -176,6 +184,9 @@
             break;
             case "_main":
                 include("pages/manage.php");
+            break;
+            case "_upload_file":
+                include("pages/upload.php");
             break;
             default:
                 include("pages/ferror.php");

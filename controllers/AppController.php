@@ -42,5 +42,29 @@
             $stmt -> execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function FLuuFileUpload($madonvi,$manhanvien){
+            $destination_path = getcwd().DIRECTORY_SEPARATOR;
+            $name_file = basename( $_FILES["fileupload"]["name"]);
+            $target_path = $destination_path . 'uploads/'. $name_file;
+            move_uploaded_file($_FILES['fileupload']['tmp_name'], $target_path);
+            $pdo = ConnectDb::getInstance()->getConnection();
+            $stmt = $pdo->prepare("call p_luu_thongtin_file_kemtheo(:madonvi,:namefile,:manhanvien);");
+            $stmt -> bindParam(':madonvi', $madonvi, PDO::PARAM_STR);
+            $stmt -> bindParam(':namefile', $name_file, PDO::PARAM_STR);
+            $stmt -> bindParam(':manhanvien', $manhanvien, PDO::PARAM_STR);
+            $stmt -> execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function FLoadFileUploaded($id_vbcc, $madonvi, $manhanvien){
+            $pdo = ConnectDb::getInstance()->getConnection();
+            $stmt = $pdo->prepare("call p_load_file_uploaded(:id_vbcc,:madonvi,:manhanvien);");
+            $stmt -> bindParam(':id_vbcc', $id_vbcc, PDO::PARAM_STR);
+            $stmt -> bindParam(':madonvi', $madonvi, PDO::PARAM_STR);
+            $stmt -> bindParam(':manhanvien', $manhanvien, PDO::PARAM_STR);
+            $stmt -> execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

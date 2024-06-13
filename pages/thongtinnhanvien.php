@@ -17,6 +17,7 @@
                         <div class="page-header">
                             <h3 class="mb-3" id="navs">Thông tin chung</h3>
                             <input id="thongtin_idct_vbcc" hidden=true readonly=true>
+                            <input id="idct_vbcc_luu_file" hidden=true readonly=true>
                         </div>
                     </div>
                 </div>
@@ -148,9 +149,19 @@
                 </div>
             </div>
             <div class="col-lg-12">
-            <div class="form-group">
+                <div class="form-group">
                     <label class="control-label">File đính kèm</label>
-                    <input id="chitiet_filekem" name="" class="form-control" type="text" placeholder="">
+                    <div class="wrapper" id="filedinhkem_upload">
+                        <form action="#">
+                            <input class="file-input" type="file" name="fileupload" id="fileupload" hidden>
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Chọn tệp đính kèm</p>
+                        </form>
+                        <section class="progress-area"></section>
+                    </div>
+                    <div class="wrapper" id="filedinhkem_uploaded">
+                        <section class="uploaded-area"></section>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,6 +177,7 @@
     
 </style>
 <script type="text/javascript">
+    const form = document.querySelector("form"), fileInput = document.querySelector(".file-input"), progressArea = document.querySelector(".progress-area"), uploadedArea = document.querySelector(".uploaded-area");
     var wHeight = $(window).height();
     var wWidht = $(window).width();
     var w_gird = (wWidht/1.29)/5;
@@ -174,6 +186,7 @@
     var madonvi = <?php echo $_SESSION["madv"]; ?>;
     var manhanvien = <?php echo $_SESSION["manv"]; ?>;
     var tennhanvien = <?php echo "'".$_SESSION["tennv"]."'"; ?>;
+    var id_vbcc_luu;
     $(document).ready(function () {
         get_thongtin_chung(madonvi, manhanvien);
         $("#chitiet_tungay").jqxDateTimeInput({ width: '100%', height: '38px', culture: 'vi-VN', template: "primary"});
@@ -269,54 +282,27 @@
             }
         });
         $("#chitiet_vbcc_luu").click(function(){
-            var idct = $("#thongtin_idct_vbcc").val();
-            var tungay = $("#chitiet_tungay").val();
-            var denngay = $("#chitiet_denngay").val();
-            var cosodaotao = $("#chitiet_coso").val();
-            var vanbangcc = $("#chitiet_vbcc").val();
-            var diadiem = $("#chitiet_diadiem").val();
-            var loaichungchi = $("#chitiet_loaicc").val();
-            var diem = $("#chitiet_diemthi").val();
-            var ngaycapchungchi = $("#chitiet_ngaycap").val();
-            var mucchungchi = $("#chitiet_muccc").val();
-            var ngayhethan = $("#chitiet_ngayhethan").val();
-            var ghichu = $("#chitiet_ghichu").val();
-            var filedinhkem = $("#chitiet_filekem").val();
-            
-            $.ajax({
-                type: 'POST',
-                url: 'go',
-                data: {
-                    for: "luu_thongtin_vanbang_chungchi",
-                    idct: idct,
-                    madonvi: madonvi,
-                    tungay: convertDate(tungay),
-                    denngay: convertDate(denngay),
-                    cosodaotao: cosodaotao,
-                    vanbangcc: vanbangcc,
-                    diadiem: diadiem,
-                    loaichungchi: loaichungchi,
-                    diem: diem,
-                    ngaycapchungchi: convertDate(ngaycapchungchi),
-                    mucchungchi: mucchungchi,
-                    ngayhethan: convertDate(ngayhethan),
-                    ghichu: ghichu,
-                    filedinhkem: filedinhkem,
-                    manhanvien: manhanvien
-                }
-            }).done(function(data){
-                var value = JSON.parse(data);
-                if(value[0].ketqua > 0) {
-                    cute_alert_success("Lưu thông tin thành công!");
-                    load_ds_vbcc();
-                } else {
-                    cute_alert_error('Lưu thông tin thất bại!');
-                }
-            });   
+            luu_thongtin_vbcc("1");
         });
         $("#chitiet_vbcc_dong").click(function(){
             modal_themvbcc.close();
         });
+        form.addEventListener("click", () =>{
+            fileInput.click();
+        });
+
+        fileInput.onchange = ({target})=>{
+            let file = target.files[0];
+            if(file){
+                let fileName = file.name;
+                if(fileName.length >= 12){
+                    let splitName = fileName.split('.');
+                    fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+                }
+                uploadFile(fileName);
+            }
+        }
+
 
 
         // $("#vungtrong_sua").click(function(){
@@ -431,6 +417,114 @@
                 $("#thongtin_phongban").val(value[0].TEN_PHONG_BAN);
                 $("#thongtin_ghichu").val(value[0].GHI_CHU);
             }
+        });
+    }
+    function uploadFile(name){
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', "go", true);
+        xhr.upload.addEventListener("progress", ({loaded, total}) =>{
+            let fileLoaded = Math.floor((loaded / total) * 100);
+            let fileTotal = Math.floor(total / 1000);
+            let fileSize;
+            (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024*1024)).toFixed(2) + " MB";
+            let progressHTML = `<li class="row">
+                                <i class="fas fa-file-alt"></i>
+                                <div class="content">
+                                    <div class="details">
+                                    <span class="name">${name} • Uploading</span>
+                                    <span class="percent">${fileLoaded}%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                    <div class="progress" style="width: ${fileLoaded}%"></div>
+                                    </div>
+                                </div>
+                                </li>`;
+            uploadedArea.classList.add("onprogress");
+            progressArea.innerHTML = progressHTML;
+            if(loaded == total){
+                show_file_uploaded('', madonvi, manhanvien);
+                // progressArea.innerHTML = "";
+                // let uploadedHTML = `<li class="row">
+                //                         <div class="content upload">
+                //                         <i class="fas fa-file-alt"></i>
+                //                         <div class="details">
+                //                             <span class="name">${name} • Uploaded</span>
+                //                             <span class="size">${fileSize}</span>
+                //                         </div>
+                //                         </div>
+                //                         <i class="fa fa-check"></i>
+                //                     </li>`;
+                // uploadedArea.classList.remove("onprogress");
+                // uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+            }
+        });
+        let data = new FormData(form);
+        data.append('for', '_upload_file');
+        xhr.send(data);
+    }
+    function luu_thongtin_vbcc(status_thongbao){
+        var idct = $("#thongtin_idct_vbcc").val();
+        var tungay = $("#chitiet_tungay").val();
+        var denngay = $("#chitiet_denngay").val();
+        var cosodaotao = $("#chitiet_coso").val();
+        var vanbangcc = $("#chitiet_vbcc").val();
+        var diadiem = $("#chitiet_diadiem").val();
+        var loaichungchi = $("#chitiet_loaicc").val();
+        var diem = $("#chitiet_diemthi").val();
+        var ngaycapchungchi = $("#chitiet_ngaycap").val();
+        var mucchungchi = $("#chitiet_muccc").val();
+        var ngayhethan = $("#chitiet_ngayhethan").val();
+        var ghichu = $("#chitiet_ghichu").val();
+        var filedinhkem = "";
+        $.ajax({
+            type: 'POST',
+            url: 'go',
+            data: {
+                for: "luu_thongtin_vanbang_chungchi",
+                idct: idct,
+                madonvi: madonvi,
+                tungay: convertDate(tungay),
+                denngay: convertDate(denngay),
+                cosodaotao: cosodaotao,
+                vanbangcc: vanbangcc,
+                diadiem: diadiem,
+                loaichungchi: loaichungchi,
+                diem: diem,
+                ngaycapchungchi: convertDate(ngaycapchungchi),
+                mucchungchi: mucchungchi,
+                ngayhethan: convertDate(ngayhethan),
+                ghichu: ghichu,
+                filedinhkem: filedinhkem,
+                manhanvien: manhanvien
+            }
+        }).done(function(data){
+            var value = JSON.parse(data);
+            if(value[0].ketqua > 0) {
+                id_vbcc_luu = value[0].ketqua;
+                if (status_thongbao == "1") {
+                   cute_alert_success("Lưu thông tin thành công!");
+                }
+                load_ds_vbcc();
+            } else {
+                if (status_thongbao == "1") {
+                    cute_alert_error('Lưu thông tin thất bại!');
+                }
+            }
+        });
+    }
+    function show_file_uploaded(s_idvbcc, s_madonvi, s_manhanvien){
+        $.ajax({
+            type: 'POST',
+            url: 'go',
+            data: {
+                for: "load_file_uploaded",
+                idvbcc: s_idvbcc,
+                madonvi: s_madonvi,
+                manhanvien: s_manhanvien
+            }
+        }).done(function(data){
+            
+            console.log("Đã show!");
         });
     }
 </script>
