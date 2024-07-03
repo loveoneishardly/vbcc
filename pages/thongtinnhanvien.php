@@ -251,6 +251,14 @@
             var selectedRowData_dsvbcc = $('#list_vanbang_chungchi').jqxGrid('getrowdata', rowBoundIndex);
             $("#thongtin_idct_vbcc").val(selectedRowData_dsvbcc.ID_CC);
         });
+        $('#list_vanbang_chungchi').on('rowdoubleclick', function (event) {
+            var args = event.args;
+            var rowBoundIndex = args.rowindex;
+            var selectedRowData_dsvbcc = $('#list_vanbang_chungchi').jqxGrid('getrowdata', rowBoundIndex);
+            modal_themvbcc.open();
+            load_thongtin_vbcc(selectedRowData_dsvbcc.ID_CC, madonvi, manhanvien);
+            $("#chitiet_hoten").val(tennhanvien);
+        });
         $("#vbcc_xemdanhsach").click(function(){
             load_ds_vbcc();
         });
@@ -301,38 +309,7 @@
                 }
                 uploadFile(fileName);
             }
-        }
-
-
-
-        // $("#vungtrong_sua").click(function(){
-        //     var idvungtrong = $("#vungtrong_id").val();
-        //     var manongho = $("#vungtrong_manongho").val();
-        //     if (idvungtrong) {
-        //         var status = action_input(false);
-        //         if (status) {
-        //             modal_themvbcc.open();
-        //             get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
-        //         }
-        //     } else {
-        //         cute_alert_warning("Chưa chọn vùng trồng nào!");
-        //     }
-        // });
-        // $("#vungtrong_chitiet").click(function(){
-        //     var idvungtrong = $("#vungtrong_id").val();
-        //     var manongho = $("#vungtrong_manongho").val();
-        //     if (idvungtrong){
-        //         var status = action_input(true);
-        //         if (status) {
-        //             modal_themvbcc.open();
-        //             get_info_farm(madonvi, idvungtrong, manongho, manhanvien);
-        //         }
-        //     } else {
-        //         cute_alert_warning("Chưa chọn vùng trồng nào!");
-        //     }
-        // });
-        
-        
+        };        
     });
     function load_ds_vbcc(){
         var url_dsvbcc = "go?for=load_list_vbcc&madonvi=" + madonvi + "&manhanvien=" + manhanvien;
@@ -512,6 +489,35 @@
             }
         });
     }
+    function load_thongtin_vbcc(l_idvbcc,l_madonvi,l_manhanvien){
+        $.ajax({
+            type: 'POST',
+            url: 'go',
+            data: {
+                for: "load_thongtin_vanbang_chungchi",
+                idvbcc: l_idvbcc,
+                madonvi: l_madonvi,
+                manhanvien: l_manhanvien
+            }
+        }).done(function(data){
+            var value = JSON.parse(data);
+            if (Object.keys(value).length > 0) {
+                $("#chitiet_tungay").val(value.TU_NGAY);
+                $("#chitiet_denngay").val(value.DEN_NGAY);
+                $("#chitiet_coso").val(value.CO_SO_DAO_TAO);
+                $("#chitiet_vbcc").val(value.CHUNG_CHI_CHUNG_NHAN);
+                $("#chitiet_diadiem").val(value.DIA_DIEM_DAO_TAO);
+                $("#chitiet_loaicc").val(value.LOAI_VBCC);
+                $("#chitiet_diemthi").val(value.DIEM);
+                $("#chitiet_ngaycap").val(value.NGAY_CAP);
+                $("#chitiet_muccc").val(value.MUC_VBCC);
+                $("#chitiet_ngayhethan").val(value.NGAY_HET_HAN);
+                $("#chitiet_ghichu").val(value.GHI_CHU);
+            } else {
+                cute_alert_warning("Không có thông tin! Vui lòng xem lại!");
+            }
+        });
+    }
     function show_file_uploaded(s_idvbcc, s_madonvi, s_manhanvien){
         $.ajax({
             type: 'POST',
@@ -523,7 +529,6 @@
                 manhanvien: s_manhanvien
             }
         }).done(function(data){
-            
             console.log("Đã show!");
         });
     }

@@ -84,8 +84,13 @@
                     echo json_encode($res);
                 }
             break;
-            case "luu_thongtin_phanbon":
+            case "load_thongtin_vanbang_chungchi":
                 if(isset($_SESSION["madv"])){
+                    $id_vbcc = $_POST['idvbcc'];
+                    $madonvi = $_POST['madonvi'];
+                    $manhanvien = $_POST['manhanvien'];
+                    $res = (new AppController())->FLoadThongTinVBCC($id_vbcc, $madonvi, $manhanvien);
+                    echo json_encode($res);
                 }
             break;
             case "get_thongtin_canhtac":

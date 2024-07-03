@@ -66,5 +66,15 @@
             $stmt -> execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function FLoadThongTinVBCC($id_vbcc, $madonvi, $manhanvien){
+            $pdo = ConnectDb::getInstance()->getConnection();
+            $stmt = $pdo->prepare("call p_load_thongtin_vbcc(:id_vbcc,:madonvi,:manhanvien);");
+            $stmt -> bindParam(':id_vbcc', $id_vbcc, PDO::PARAM_STR);
+            $stmt -> bindParam(':madonvi', $madonvi, PDO::PARAM_STR);
+            $stmt -> bindParam(':manhanvien', $manhanvien, PDO::PARAM_STR);
+            $stmt -> execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
     }
 ?>
