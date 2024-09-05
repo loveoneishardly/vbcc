@@ -45,8 +45,9 @@
 
         public function FLuuFileUpload($madonvi,$manhanvien){
             $destination_path = getcwd().DIRECTORY_SEPARATOR;
-            $name_file = basename( $_FILES["fileupload"]["name"]);
-            $target_path = $destination_path . 'uploads/'. $name_file;
+            $directory = 'uploads/';
+            $name_file = basename($_FILES["fileupload"]["name"]);
+            $target_path = $destination_path . $directory. $name_file;
             move_uploaded_file($_FILES['fileupload']['tmp_name'], $target_path);
             $pdo = ConnectDb::getInstance()->getConnection();
             $stmt = $pdo->prepare("call p_luu_thongtin_file_kemtheo(:madonvi,:namefile,:manhanvien);");
