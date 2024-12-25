@@ -150,7 +150,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="control-label">File đính kèm</label>
+                    <!-- <label class="control-label">File đính kèm</label>
                     <div class="wrapper" id="filedinhkem_upload">
                         <form action="#">
                             <input class="file-input" type="file" name="fileupload" id="fileupload" hidden>
@@ -161,6 +161,28 @@
                     </div>
                     <div class="wrapper" id="filedinhkem_uploaded">
                         <section class="uploaded-area"></section>
+                    </div> -->
+                    <label class="control-label">File đính kèm</label>
+                    <div class="container">
+                        <div class="drop-section">
+                            <div class="col">
+                                <div class="cloud-icon">
+                                    <img src="lib/icons/cloud.png" alt="cloud">
+                                </div>
+                                <span>Drag & Drop your files here</span>
+                                <span>OR</span>
+                                <button class="file-selector">Browse Files</button>
+                                <form action="#">
+                                    <input type="file" class="file-selector-input" name="fileupload" id="fileupload">
+                                </form>
+                            </div>
+                            <div class="col">
+                                <div class="drop-here">Drop Here</div>
+                            </div>
+                        </div>
+                        <div class="list-section">
+                            <div class="list"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,15 +240,15 @@
             height: '450',
             source: dataAdapter,
             columnsresize: false,
-            // showfilterrow: true,
+            showfilterrow: true,
             filterable: true,
-            editable: false,
-            selectionmode: 'singlerow',
+            selectionmode: 'multiplecellsextended',
             showstatusbar: true,
             statusbarheight: 32,
             showaggregates: true,
             pageable: true,
             pagermode: 'simple',
+            autoshowfiltericon: true,
             columns: [
                 {
                     text: '#', datafield: '', align: 'center', cellsalign: 'center',
@@ -238,11 +260,11 @@
                 { text: 'ID', datafield: 'ID_CC', width: w_gird, align: 'center', cellsalign: 'center', hidden: true},
                 { text: 'Mã đơn vị', datafield: 'MA_DON_VI', width: w_gird, align: 'center', cellsalign: 'center', hidden: true},
                 { text: 'Mã nhân viên', datafield: 'MA_NHAN_VIEN', width: w_gird, align: 'center', cellsalign: 'left', hidden: true},
-                { text: 'Từ ngày', datafield: 'TU_NGAY', width: w_gird, align: 'center', cellsalign: 'center'},
-                { text: 'Đến ngày', datafield: 'DEN_NGAY', width: w_gird, align: 'center', cellsalign: 'center'},
-                { text: 'Ngày cấp', datafield: 'NGAY_CAP', width: w_gird, align: 'center', cellsalign: 'center'},
-                { text: 'Chứng chỉ, chứng nhận', datafield: 'TEN_CHUNGCHI_CHUNGNHAN', width: w_gird, align: 'center', cellsalign: 'center'},
-                { text: 'Ngày hết hạn', datafield: 'NGAY_HET_HAN', width: w_gird, align: 'center', cellsalign: 'center'}
+                { text: 'Từ ngày', datafield: 'TU_NGAY', width: w_gird, align: 'center', filtertype: 'range', cellsalign: 'center'},
+                { text: 'Đến ngày', datafield: 'DEN_NGAY', width: w_gird, align: 'center', filtertype: 'range', cellsalign: 'center'},
+                { text: 'Ngày cấp', datafield: 'NGAY_CAP', width: w_gird, align: 'center', filtertype: 'range', cellsalign: 'center'},
+                { text: 'Chứng chỉ, chứng nhận', datafield: 'TEN_CHUNGCHI_CHUNGNHAN', filtertype: 'input', width: w_gird, align: 'center', cellsalign: 'center'},
+                { text: 'Ngày hết hạn', datafield: 'NGAY_HET_HAN', width: w_gird, align: 'center', filtertype: 'range', cellsalign: 'center'}
             ]
         });
         $('#list_vanbang_chungchi').on('rowclick', function (event) {
@@ -295,21 +317,21 @@
         $("#chitiet_vbcc_dong").click(function(){
             modal_themvbcc.close();
         });
-        form.addEventListener("click", () =>{
-            fileInput.click();
-        });
+        // form.addEventListener("click", () =>{
+        //     fileInput.click();
+        // });
 
-        fileInput.onchange = ({target})=>{
-            let file = target.files[0];
-            if(file){
-                let fileName = file.name;
-                if(fileName.length >= 12){
-                    let splitName = fileName.split('.');
-                    fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
-                }
-                uploadFile(fileName);
-            }
-        };        
+        // fileInput.onchange = ({target})=>{
+        //     let file = target.files[0];
+        //     if(file){
+        //         let fileName = file.name;
+        //         if(fileName.length >= 12){
+        //             let splitName = fileName.split('.');
+        //             fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+        //         }
+        //         uploadFile(fileName);
+        //     }
+        // };        
     });
     function load_ds_vbcc(){
         var url_dsvbcc = "go?for=load_list_vbcc&madonvi=" + madonvi + "&manhanvien=" + manhanvien;
@@ -531,5 +553,125 @@
         }).done(function(data){
             console.log("Đã show!");
         });
+    }
+
+
+    const dropArea = document.querySelector('.drop-section')
+    const listSection = document.querySelector('.list-section')
+    const listContainer = document.querySelector('.list')
+    const fileSelector = document.querySelector('.file-selector')
+    const fileSelectorInput = document.querySelector('.file-selector-input')
+
+    // upload files with browse button
+    fileSelector.onclick = () => fileSelectorInput.click()
+    fileSelectorInput.onchange = () => {
+        [...fileSelectorInput.files].forEach((file) => {
+            if(typeValidation(file.type)){
+                uploadFile(file)
+            }
+        })
+    }
+
+    // when file is over the drag area
+    dropArea.ondragover = (e) => {
+        e.preventDefault();
+        [...e.dataTransfer.items].forEach((item) => {
+            if(typeValidation(item.type)){
+                dropArea.classList.add('drag-over-effect')
+            }
+        })
+    }
+    // when file leave the drag area
+    dropArea.ondragleave = () => {
+        dropArea.classList.remove('drag-over-effect')
+    }
+    // when file drop on the drag area
+    dropArea.ondrop = (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('drag-over-effect')
+        if(e.dataTransfer.items){
+            [...e.dataTransfer.items].forEach((item) => {
+                if(item.kind === 'file'){
+                    const file = item.getAsFile();
+                    if(typeValidation(file.type)){
+                        uploadFile(file)
+                    }
+                }
+            })
+        }else{
+            [...e.dataTransfer.files].forEach((file) => {
+                if(typeValidation(file.type)){
+                    uploadFile(file)
+                }
+            })
+        }
+    }
+
+
+    // check the file type
+    function typeValidation(type){
+        var splitType = type.split('/')[0]
+        if(type == 'application/pdf' || splitType == 'image' || splitType == 'video'){
+            return true
+        }
+    }
+
+    // upload file function
+    function uploadFile(file){
+        listSection.style.display = 'block'
+        var li = document.createElement('li')
+        li.classList.add('in-prog')
+        li.innerHTML = `
+            
+            <div class="col">
+                <img src="lib/icons/${iconSelector(file.type)}" alt="">
+            </div>
+            <div class="col">
+                <div class="file-name">
+                    <div class="name">${file.name}</div>
+                    <span>0%</span>
+                </div>
+                <div class="file-progress">
+                    <span></span>
+                </div>
+                <div class="file-size">${(file.size/(1024*1024)).toFixed(2)} MB</div>
+            </div>
+            <div class="col">
+                <svg xmlns="http://www.w3.org/2000/svg" class="cross" height="20" width="20"><path d="m5.979 14.917-.854-.896 4-4.021-4-4.062.854-.896 4.042 4.062 4-4.062.854.896-4 4.062 4 4.021-.854.896-4-4.063Z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="tick" height="20" width="20"><path d="m8.229 14.438-3.896-3.917 1.438-1.438 2.458 2.459 6-6L15.667 7Z"/></svg>
+            </div>
+            <div class="col">
+                <svg xmlns="http://www.w3.org/2000/svg" class="tick" height="20" width="20"><path d="m8.229 14.438-3.896-3.917 1.438-1.438 2.458 2.459 6-6L15.667 7Z"/></svg>
+            </div>
+        `
+        listContainer.prepend(li)
+        var http = new XMLHttpRequest()
+        var data = new FormData(form)
+        data.append('for', '_upload_file');
+        http.onload = () => {
+            li.classList.add('complete')
+            li.classList.remove('in-prog')
+        }
+        http.upload.onprogress = (e) => {
+            var percent_complete = (e.loaded / e.total)*100
+            li.querySelectorAll('span')[0].innerHTML = Math.round(percent_complete) + '%'
+            li.querySelectorAll('span')[1].style.width = percent_complete + '%'
+        }
+        http.open('POST', "go", true);
+        http.send(data)
+        li.querySelector('.cross').onclick = () => http.abort()
+        http.onabort = () => li.remove()
+
+        const removeIcon = li.querySelector('.remove');
+        removeIcon.addEventListener('click', () => {
+            // Code to handle upload cancellation
+            console.log('Upload cancelled for:', file.name);
+            li.remove(); // Remove the list item from the DOM
+        });
+    }
+    // find icon for file
+    function iconSelector(type){
+        var splitType = (type.split('/')[0] == 'application') ? type.split('/')[1] : type.split('/')[0];
+        return splitType + '.png'
     }
 </script>
